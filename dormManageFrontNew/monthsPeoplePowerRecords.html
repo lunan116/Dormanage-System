@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--360浏览器优先以webkit内核解析-->
+
+
+    <title>H+ 后台主题UI框架 - 主页示例</title>
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/plugins/bootstrap-table/bootstrap-table.min.css">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/mystyle.css">
+
+</head>
+
+<body class="gray-bg">
+    <!-- 加载动画 -->
+    <!-- 加载动画 -->
+    <div id="loading" style="margin-top:-55px;width:100%;height: 100%;background: rgba(0,0,0,0.5);position: fixed;z-index: 1000000;display: none;" >
+        <div class="sk-spinner sk-spinner-three-bounce" style="position: relative;top:50%;height:11px; ">
+            <div class="sk-bounce1"></div>
+            <div class="sk-bounce2"></div>
+            <div class="sk-bounce3"></div>
+        </div>
+    </div>
+    <div class="contetnBox  animated fadeInRight">
+        <div class="btn-group hidden-xs" id="exampleTableEventsToolbar" role="group">
+                <!-- <button type="button" class="btn btn-outline btn-default" id="editUser" title="退房登记"   data-target="#myModal1">
+                    <i class="glyphicon glyphicon-edit" aria-hidden="true"></i>
+                    退房登记
+                </button> -->
+                <!-- <button type="button" class="btn btn-outline btn-default" id="delete" title="删除" >
+                    <i class="glyphicon glyphicon-trash" aria-hidden="true"></i>
+                </button> -->
+                <div class="dropdown">
+                    <button id="selectButton" style="width: 160px;" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                        月份选择<span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu1 dropdown-menu">
+                        <li><a href="#">1月份</a></li>
+                        <li><a href="#">2月份</a></li>
+                        <li><a href="#">3月份</a></li>
+                        <li><a href="#">4月份</a></li>
+                        <li><a href="#">5月份</a></li>
+                        <li><a href="#">6月份</a></li>
+                        <li><a href="#">7月份</a></li>
+                        <li><a href="#">8月份</a></li>
+                        <li><a href="#">9月份</a></li>
+                        <li><a href="#">10月份</a></li>
+                        <li><a href="#">11月份</a></li>
+                        <li><a href="#">12月份</a></li>
+                    </ul>
+                </div>
+                <div class="input-group input-group1">
+                                    <input id="keyword" type="text" placeholder="请输入关键词" class="input-sm form-control"> <span class="input-group-btn">
+                                        <button type="button" class="btn btn-sm btn-primary"> 搜索</button> </span>
+                                </div>
+        </div>
+        <table class="table table-hover table-bordered" id="dataTable">
+          <thead>
+            <tr style="text-align: center;">
+              <!-- <th>选择框</th> -->
+              <th>ID</th>
+              <th>姓名</th>
+              <th>身份证号</th>
+              <th>性别</th>
+              <th>所属公司</th>
+              <th>职等</th>
+              <th>联系方式</th>
+              <th>入住房间号</th>
+              <th>入住时间</th>
+              <th>起始电表（度）</th>
+              <th>退房时间</th>
+              <th>退房电表（度）</th>
+              <th>用电量（度）</th>
+            </tr>
+          </thead>
+          <tbody class="content1">
+          
+          </tbody>
+        </table>
+        
+        
+        <div class="fenye">
+            <ul class="pagination pagination-sm fenye1">
+            <li id="pre"><a href="#">&laquo;</a></li>
+            <li id="pageNo"><a href="#">1</a></li>
+            <li id="next"><a href="#">&raquo;</a></li>
+        </ul>
+        </div>
+
+
+    
+
+    </div>
+
+    <!-- 全局js -->
+    <script src="js/jquery.min.js?v=2.1.4"></script>
+    <script src="js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="js/plugins/layer/layer.min.js"></script>
+
+    <!-- Bootstrap table -->
+    <script src="js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <!-- <script src="js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script> -->
+    <script src="js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script type="text/javascript" src="./js/jquery-vilidate.js"></script>
+
+    <!-- layerDate plugin javascript -->
+    <script src="js/plugins/layer/laydate/laydate.js"></script>
+    <script type="text/javascript" src="js/jquery.table2excel.js"></script>
+
+    <!-- Peity -->
+    <!-- <script src="js/demo/bootstrap-table-demo.js"></script> -->
+    <!-- 自定义js -->
+    <script src="js/content.js"></script>
+    <script src="js/comm.js"></script>
+    <!-- 欢迎信息 -->
+    <script src="js/welcome.js"></script>
+    <script type="text/javascript">
+    $().ready(function() {
+        var pageNo = 1;
+        var leftMsg = false;
+        var rightMsg = false;
+        var dd = new Date();
+        var month = dd.getMonth();
+        var keyword = ""
+        refleshtable(pageNo,callbacks,keyword,month)
+        $("#pre").click(function(){
+            $('#next > a').css("background-color","#fff")
+            pageNo -= 1
+            if (pageNo <= 0) {
+                pageNo = 1;
+                leftMsg = true;
+                $('#pre > a').css("background-color","#ddd")
+                $('#pre > a').attr('disabled',"true");
+            }else{
+                refleshtable(pageNo,callbacks,keyword,month)
+                $('#pre > a').css("background-color","#fff")
+                $('#pre > a').attr('disabled',"false");
+                
+            }
+        })
+
+        $("#next").click(function(){
+            pageNo += 1;
+            $('#pre > a').css("background-color","#fff")
+            keyword = $("#keyword").val();
+            console.log(keyword)
+            if (keyword) {
+                refleshtable(pageNo,callbacks,keyword,month)
+            }else{
+                refleshtable(pageNo,callbacks,keyword,month)
+            }
+            
+            
+        })
+
+        
+
+        $(".dropdown-menu1 > li").click(function(){
+            //console.log($(this).text())
+            //console.log($('#selectButton').text())
+            $('#selectButton').html($(this).text()+`<span class="caret"></span>`)
+            var k = $('#selectButton').text().toString();
+            month = k.substr(0,k.length-2);
+            //console.log(keyword)
+            pageNo=1
+            refleshtable(pageNo,callbacks,keyword,month)
+
+        })
+
+        function callbacks(s){
+            if ( s==-1 ) {
+                pageNo -= 1;
+                $("#pageNo > a").text(pageNo)
+                $('#next > a').css("background-color","#ddd")
+                $('#next > a').attr('disabled',"true");
+            }else{
+                $("#pageNo > a").text(pageNo)
+            }
+            
+        }
+
+        function refleshtable(pageNo,cb,keyword,month){
+            if (keyword) {
+                var data = {pageNo:pageNo,keyword:keyword,month}
+            }else{
+                var data = {pageNo:pageNo,keyword,month}
+            }
+            
+                $.ajax({
+                    url:"http://10.11.18.222:5002/getMonthUserInfo",
+                    method:"post",
+                    data:data,
+                    beforeSend:function(){
+                    $("#loading").fadeIn(200);
+                    },
+                    success:function(result){
+                    $("#loading").fadeOut(200);
+                    //console.log(result);
+                    if (result.errorCode == "200") {
+                        var html = "";
+
+                        for(var i = 0;i<result.errMessage.length;i++){
+                            if (result.errMessage[i].endTime == "") {
+                                html += `<tr class="success"><td>`+result.errMessage[i].id+
+                                `</td><td>`+result.errMessage[i].userName+
+                                `</td><td>`+result.errMessage[i].IDNo+
+                                `</td><td>`+result.errMessage[i].gender+
+                                `</td><td>`+result.errMessage[i].belongToCompany+
+                                `</td><td>`+result.errMessage[i].rank+
+                                `</td><td>`+result.errMessage[i].phoneNo+
+                                `</td><td>`+result.errMessage[i].roomNo+
+                                `</td><td>`+timestampToTime(parseInt(result.errMessage[i].startTime))+
+                                `</td><td>`+result.errMessage[i].startNo+
+                                `</td><td>`+`……`+
+                                `</td><td>`+`……`+
+                                `</td><td>`+(Number(result.errMessage[i].usedNo).toFixed(2))+
+                                `</td>`
+                            }else{
+                                html +=`<tr class="danger"><td>`+result.errMessage[i].id+
+                                `</td><td>`+result.errMessage[i].userName+
+                                `</td><td>`+result.errMessage[i].IDNo+
+                                `</td><td>`+result.errMessage[i].gender+
+                                `</td><td>`+result.errMessage[i].belongToCompany+
+                                `</td><td>`+result.errMessage[i].rank+
+                                `</td><td>`+result.errMessage[i].phoneNo+
+                                `</td><td>`+result.errMessage[i].roomNo+
+                                `</td><td>`+timestampToTime(parseInt(result.errMessage[i].startTime))+
+                                `</td><td>`+result.errMessage[i].startNo+
+                                `</td><td>`+timestampToTime(parseInt(result.errMessage[i].endTime))+
+                                `</td><td>`+result.errMessage[i].endNo+
+                                `</td><td>`+(Number(result.errMessage[i].usedNo).toFixed(2))+`</td>`
+                            }
+
+                        }
+                        //console.log(html)
+                        $(".content1").html(html)
+                        if (result.errMessage.length == 0) {$(".content1").html(`<tr class="no-records-found"><td colspan="13">没有找到匹配的记录</td></tr>`)}
+
+                        cb(0)
+                    }else if (result.errorCode == "401" || result.errorCode == "406") {
+                        $(".content1").html(`<tr class="no-records-found"><td colspan="13">)没有找到匹配的记录</td></tr>`)
+                        fail_prompt("页面数据加载失败，请稍后重试！")
+                    }else if(result.errorCode == "302"){
+                        fail_prompt("已经是最后一页了！")
+                        cb(-1)
+                    }else if(result.errorCode == "303"){
+                        fail_prompt("查询失败，未找到该关键字相关信息！")
+                        $(".content1").html(`<tr class="no-records-found"><td colspan="13">没有找到匹配的记录</td></tr>`)
+                        $('#next > a').css("background-color","#ddd")
+                        $('#next > a').attr('disabled',"true");
+                        pageNo = 1
+
+                        
+                    }
+                }
+                });
+
+        }
+
+        /*输入框内容改变触发事件*/
+        $("#keyword").bind('input propertychange', function(){
+            console.log(pageNo)
+            keyword = $(this).val();
+            if (keyword) {
+                pageNo=1
+                refleshtable(pageNo,callbacks,keyword,month)
+            }else{
+                pageNo=1
+                $('#next > a').css("background-color","#fff")
+                        $('#next > a').attr('disabled',"false");
+                refleshtable(pageNo,callbacks,keyword,month)
+            }
+        })
+        
+        
+
+
+        
+
+
+     })
+        /*时间格式化*/
+        function a(d){
+            if(parseInt(d) < 10){
+                return  "0"+d
+            }else{
+                return d
+            }
+        }
+        function timestampToTime(timestamp) {
+            var date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+            var Y = date.getFullYear() + '-';
+            var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+            var D = a(date.getDate()) + ' ';
+            var h = a(date.getHours()) + ':';
+            var m = a(date.getMinutes()) + ':';
+            var s = a(date.getSeconds());
+            return Y + M + D + h + m + s;
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>智见控股宿舍管理系统 - 登录</title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html" />
+    <![endif]-->
+    <script>if(window.top !== window.self){ window.top.location = window.location;}</script>
+</head>
+
+<body class="gray-bg">
+
+    <div class="middle-box text-center loginscreen  animated fadeInDown">
+        <div>
+            <div>
+
+                <h1 class="logo-name">H+</h1>
+
+            </div>
+            <h3>欢迎使用</h3>
+
+            <form class="m-t" id="loginform" name="loginform" role="form" action="index.html">
+                <div class="form-group">
+                    <input type="text" id="username" name="username" class="form-control" placeholder="用户名" required="">
+                </div>
+                <div class="form-group">
+                    <input type="password" id="password" name="password" class="form-control" placeholder="密码" required="">
+                </div>
+                <button type="submit" id="loginsubmit" class="btn btn-primary block full-width m-b">登 录</button>
+
+
+                
+
+            </form>
+        </div>
+    </div>
+
+    <!-- 全局js -->
+    <script src="js/jquery.min.js?v=2.1.4"></script>
+    <script src="js/bootstrap.min.js?v=3.3.6"></script>
+    <script type="text/javascript" src="./js/jquery-vilidate.js"></script>
+    <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+    <!--统计代码，可删除-->
+    <script type="text/javascript">
+        $().ready(function() {
+            var validate = $("#loginform").validate({
+                debug: true, //调试模式取消submit的默认提交功能   
+                //errorClass: "label.error", //默认为错误的样式类为：error   
+                focusInvalid: false, //当为false时，验证无效时，没有焦点响应  
+                onkeyup: false,   
+                  
+                
+                rules:{
+                    username:{
+                        required:true
+                    },
+                    password:{
+                        required:true,
+                        rangelength:[3,10]
+                    }           
+                },
+                messages:{
+                    
+                    username:{
+                        required:"必填"
+                    },
+                    password:{
+                        required:"必填",
+                        rangelength: "密码长度为3-10位由数字和字符组成的字符串"
+                    }                        
+                }
+            });
+
+            $("#loginsubmit").click(function(){
+                var name = $("#username").val();
+                var password = $("#password").val();
+                var data = {
+                name:name,
+                password:password
+                }
+                $.ajax({
+                url:"http://10.11.18.222:5002/login",
+                method:"post",
+                data:data,
+                success:function(result){
+                //console.log(result);
+                if (result.errorCode == "200") {
+                    alert("登录成功")
+                    //console.log(result.data);
+                    sessionStorage.setItem('_id',result.data._id);
+                    sessionStorage.setItem('username',result.data.name);
+                    sessionStorage.setItem('workspace',result.data.workspace);
+                    sessionStorage.setItem('type',result.data.type);
+                    sessionStorage.setItem('password',result.data.password);
+                    window.location.href="index.html"; 
+                }else{
+                    alert(result.errorMessage)
+                }
+            }});
+            })
+
+
+        })
+    </script>
+</body>
+
+</html>

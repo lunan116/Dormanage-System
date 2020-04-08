@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--360浏览器优先以webkit内核解析-->
+
+
+    <title>H+ 后台主题UI框架 - 主页示例</title>
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/plugins/bootstrap-table/bootstrap-table.min.css">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/mystyle.css">
+
+</head>
+
+<body class="gray-bg">
+    <!-- 加载动画 -->
+    <div id="loading" style="margin-top:-55px;width:100%;height: 100%;background: rgba(0,0,0,0.5);position: fixed;z-index: 1000000;display: none;" >
+        <div class="sk-spinner sk-spinner-three-bounce" style="position: relative;top:50%;height:11px; ">
+            <div class="sk-bounce1"></div>
+            <div class="sk-bounce2"></div>
+            <div class="sk-bounce3"></div>
+        </div>
+    </div>
+    <div class="contetnBox">
+        <div class="btn-group hidden-xs" id="exampleTableEventsToolbar" role="group">
+                <button type="button" class="btn btn-outline btn-default" id="editUser" title="退房登记"   data-target="#myModal1">
+                    <i class="glyphicon glyphicon-edit" aria-hidden="true"></i>
+                    退房登记
+                </button>
+                 <button type="button" class="btn btn-outline btn-default" id="refreshPage" title="刷新" >
+                    <i class="glyphicon glyphicon-refresh" aria-hidden="true"></i>刷新
+                </button> 
+                <div class="btn-group" data-toggle="buttons" id="groupBar">
+                    <label class="btn btn-primary" id="living">
+                        <input type="checkbox" > 入住中
+                    </label>
+                    <label class="btn btn-primary" id="gone">
+                        <input type="checkbox"> 已退房
+                    </label>
+                </div>
+                <div class="input-group input-group1">
+                    <input id="keyword" type="text" placeholder="请输入关键词" class="input-sm form-control"> <span class="input-group-btn">
+                    <button type="button" class="btn btn-sm btn-primary"> 搜索</button> </span>
+                </div>
+        </div>
+        <table class="table table-hover table-bordered" id="dataTable">
+          <thead>
+            <tr style="text-align: center;">
+              <th>选择框</th>
+              <th>ID</th>
+              <th>姓名</th>
+              <th>身份证号</th>
+              <th>性别</th>
+              <th>所属公司</th>
+              <th>职等</th>
+              <th>联系方式</th>
+              <th>入住房间号</th>
+              <th>入住时间</th>
+              <th>起始电表（度）</th>
+              <th>退房时间</th>
+              <th>退房电表（度）</th>
+              <th>已缴电费（元）</th>
+            </tr>
+          </thead>
+          <tbody class="content1">
+          
+          </tbody>
+        </table>
+        
+        
+        <div class="fenye">
+            <ul class="pagination pagination-sm fenye1">
+            <li id="pre"><a href="#">&laquo;</a></li>
+            <li id="pageNo"><a href="#">1</a></li>
+            <li id="next"><a href="#">&raquo;</a></li>
+        </ul>
+        </div>
+
+
+        <!-- 模态框 -->
+    <div class="modal inmodal fade" id="myModal" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">退房登记</h4>
+                    <small class="font-bold">记录住客退房信息
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal m-t" id="commentForm">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label control-label1">姓名：</label>
+                            <div class="col-sm-8">
+                                <label id="cname">11</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label control-label1">身份证号：</label>
+                            <div class="col-sm-8">
+                                <label id="cIDCard">11</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label control-label1">电表起始读数：</label>
+                            <div class="col-sm-8">
+                                <label id="startNo">11</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">退房电表读数：</label>
+                            <div class="col-sm-8">
+                                <input id="endNumber" type="text" class="form-control" name="startNo" required="" aria-required="true" placeholder="请输入退房电表读数">
+                            </div>
+                        </div>
+                        <input id="roomID" type="hidden"></input>
+                                                <!-- <div class="form-group">
+                                                    <div class="col-sm-4 col-sm-offset-3">
+                                                        <button class="btn btn-primary" type="submit">提交</button>
+                                                    </div>
+                                                </div> -->
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="saveInfo"  data-dismiss="modal">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+    <!-- 全局js -->
+    <script src="js/jquery.min.js?v=2.1.4"></script>
+    <script src="js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="js/plugins/layer/layer.min.js"></script>
+
+    <!-- Bootstrap table -->
+    <script src="js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <!-- <script src="js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script> -->
+    <script src="js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script type="text/javascript" src="./js/jquery-vilidate.js"></script>
+
+    <!-- layerDate plugin javascript -->
+    <script src="js/plugins/layer/laydate/laydate.js"></script>
+    <script type="text/javascript" src="js/jquery.table2excel.js"></script>
+
+    <!-- Peity -->
+    <!-- <script src="js/demo/bootstrap-table-demo.js"></script> -->
+    <!-- 自定义js -->
+    <script src="js/content.js"></script>
+    <script src="js/comm.js"></script>
+    <!-- 欢迎信息 -->
+    <script src="js/welcome.js"></script>
+    <script type="text/javascript">
+    $().ready(function() {
+        var pageNo = 1;
+        var leftMsg = false;
+        var rightMsg = false;
+        var userStatus = 0 ;//0表示入住中，1表示已退房
+        refleshtable(pageNo,callbacks,userStatus)
+        $('#refreshPage').click(()=>{
+            refleshtable(pageNo,callbacks,userStatus)
+        })
+        $("#pre").click(function(){
+            $('#next > a').css("background-color","#fff")
+            pageNo -= 1
+            if (pageNo <= 0) {
+                pageNo = 1;
+                leftMsg = true;
+                $('#pre > a').css("background-color","#ddd")
+                $('#pre > a').attr('disabled',"true");
+            }else{
+                refleshtable(pageNo,callbacks,userStatus)
+                $('#pre > a').css("background-color","#fff")
+                $('#pre > a').attr('disabled',"false");
+                
+            }
+        })
+
+        $("#living").click(function(){
+            
+
+            userStatus = 0;
+            if ($("#keyword").val()) {
+                refleshtable(1,callbacks,userStatus,$("#keyword").val())
+            }else{
+                refleshtable(1,callbacks,userStatus)
+            }
+            $(this).css({"background-color":"#18a689",
+                        "border-color": "#18a689",
+                        "color": "#FFFFFF"})
+            $("#gone").css({
+                "background-color":"#1ab394",
+                "border-color": "#1ab394",
+                "color": "#FFFFFF"
+            })
+            
+        })
+
+        $("#gone").click(function(){
+            $(this).css({"background-color":"#18a689",
+                        "border-color": "#18a689",
+                        "color": "#FFFFFF"})
+            $("#living").css({
+                "background-color":"#1ab394",
+                "border-color": "#1ab394",
+                "color": "#FFFFFF"
+            })
+            userStatus = 1;
+            if ($("#keyword").val()) {
+                refleshtable(1,callbacks,userStatus,$("#keyword").val())
+            }else{
+                refleshtable(1,callbacks,userStatus)
+            }
+            
+        })
+
+        $("#next").click(function(){
+            pageNo += 1;
+            $('#pre > a').css("background-color","#fff")
+            var keyword = $("#keyword").val();
+            //console.log(keyword)
+            if (keyword) {
+                refleshtable(pageNo,callbacks,userStatus,keyword)
+            }else{
+                refleshtable(pageNo,callbacks,userStatus)
+            }
+            
+            
+        })
+
+        $(".content").on("click",".roombox",function(){
+            //console.log($(this).attr("id"));
+            var id = $(this).attr("id");
+            if (id == undefined || id == "") {
+                fail_prompt("该房间床位已满！")
+            }else{
+                $('#myModal').modal({
+                    show: true,
+                    backdrop:'static'
+                })
+                $('#roomID').val(id);
+            }
+
+        })
+
+        $("#saveInfo").click(function(){
+            var name = $("#cname").text();
+            var IDCard = $("#cIDCard").text();
+            var endNo = $("#endNumber").val();/*
+            var roomID = $("#roomID").val();*/
+            var startNo = $("#startNo").text();
+            //console.log(startNo +"   "+endNo)
+            if (Number(startNo)>Number(endNo)) {
+                fail_prompt("起始度数不能大于退房度数！")
+            }else{
+                var data = {
+                name,startNo,endNo,IDCard
+                }
+                //console.log(data);
+                $.ajax({
+                    url:"http://10.11.18.222:5002/updateUserInfo",
+                    method:"post",
+                    data:data,
+                    beforeSend:function(){
+                    $("#loading").fadeIn(200);
+                    },
+                    success:function(result){
+                    $("#loading").fadeOut(200);
+                    //console.log(result);
+                    if (result.errorCode == "200") {
+                        success_prompt("登记成功！");
+                        refleshtable(pageNo,callbacks,userStatus,userStatus,$("#keyword").val())
+                    }else if (result.errorCode == "404" || result.errorCode == "406") {
+                        fail_prompt("登记失败，请稍后重试！")
+                    }else if(result.errorCode == "405"){
+                        fail_prompt("登记失败，该住客已经登记，现住在"+result.roomNo+"室！")
+                    }else if(result.errorCode == "402"){
+                        fail_prompt("登记失败，电表登记数不能小于原房间电表数！")
+                    }
+                }
+                });
+            }
+            
+        })
+
+        function callbacks(s){
+            if ( s==-1 ) {
+                pageNo -= 1;
+                $("#pageNo > a").text(pageNo)
+                $('#next > a').css("background-color","#ddd")
+                $('#next > a').attr('disabled',"true");
+            }else{
+                $("#pageNo > a").text(pageNo)
+            }
+            
+        }
+
+        function refleshtable(pageNo,cb,userStatus,keyword){
+            if (keyword) {
+                var data = {pageNo:pageNo,keyword:keyword,userStatus}
+            }else{
+                var data = {pageNo:pageNo,userStatus}
+            }
+            
+                $.ajax({
+                    url:"http://10.11.18.222:5002/getUserInfo",
+                    method:"post",
+                    data:data,
+                    beforeSend:function(){
+                    $("#loading").fadeIn(200);
+                    },
+                    success:function(result){
+                    $("#loading").fadeOut(200);
+                    //console.log(result);
+                    idd = "";
+                    if (result.errorCode == "200") {
+                        var html = "";
+                        if (result.errMessage.length == 0) {
+                            $(".content1").html(`<tr class="no-records-found"><td colspan="14">没有找到匹配的记录</td></tr>`)
+                        }else{
+                            for(var i = 0;i<result.errMessage.length;i++){
+                            if (result.errMessage[i].endTime == "") {
+                                html += `<tr class="success"><td><input class="checkbox1" type="checkbox" id="`+result.errMessage[i]._id+`"></td><td>`+result.errMessage[i].id+
+                                `</td><td>`+result.errMessage[i].userName+
+                                `</td><td>`+result.errMessage[i].IDNo+
+                                `</td><td>`+result.errMessage[i].gender+
+                                `</td><td>`+result.errMessage[i].belongToCompany+
+                                `</td><td>`+result.errMessage[i].rank+
+                                `</td><td>`+result.errMessage[i].phoneNo+
+                                `</td><td>`+result.errMessage[i].roomNo+
+                                `</td><td>`+timestampToTime(parseInt(result.errMessage[i].startTime))+
+                                `</td><td>`+result.errMessage[i].startNo+
+                                `</td><td>`+`……`+
+                                `</td><td>`+`……`+
+                                `</td><td>`+result.errMessage[i].usedNoList+
+                                `</td>`
+                            }else{
+                                html +=`<tr class="danger"><td><input class="checkbox1" type="checkbox"></td><td>`+result.errMessage[i].id+
+                                `</td><td>`+result.errMessage[i].userName+
+                                `</td><td>`+result.errMessage[i].IDNo+
+                                `</td><td>`+result.errMessage[i].gender+
+                                `</td><td>`+result.errMessage[i].belongToCompany+
+                                `</td><td>`+result.errMessage[i].rank+
+                                `</td><td>`+result.errMessage[i].phoneNo+
+                                `</td><td>`+result.errMessage[i].roomNo+
+                                `</td><td>`+timestampToTime(parseInt(result.errMessage[i].startTime))+
+                                `</td><td>`+result.errMessage[i].startNo+
+                                `</td><td>`+timestampToTime(parseInt(result.errMessage[i].endTime))+
+                                `</td><td>`+result.errMessage[i].endNo+
+                                `</td><td>`+(result.errMessage[i].usedNoList)+`</td>`
+                            }
+
+                        }
+                        //console.log(html)
+                        $(".content1").html(html)
+
+                        cb(0)
+                        }
+                        
+                    }else if (result.errorCode == "401" || result.errorCode == "406") {
+                        fail_prompt("页面数据加载失败，请稍后重试！")
+                    }else if(result.errorCode == "302"){
+                        fail_prompt("已经是最后一页了！")
+                        cb(-1)
+                    }else if(result.errorCode == "303"){
+                        fail_prompt("查询失败，未找到该关键字相关信息！")
+                        $(".content1").html(`<tr class="no-records-found"><td colspan="14">没有找到匹配的记录</td></tr>`)
+                        $('#next > a').css("background-color","#ddd")
+                        $('#next > a').attr('disabled',"true");
+                        pageNo = 1
+
+                        
+                    }
+                }
+                });
+
+        }
+
+        /*输入框内容改变触发事件*/
+        $("#keyword").bind('input propertychange', function(){
+            //console.log(pageNo)
+            var keyword = $(this).val();
+            if (keyword) {
+                pageNo=1
+                refleshtable(pageNo,callbacks,userStatus,keyword)
+            }else{
+                pageNo=1
+                $('#next > a').css("background-color","#fff")
+                        $('#next > a').attr('disabled',"false");
+                refleshtable(pageNo,callbacks,userStatus)
+            }
+        })
+        
+        //设置完成退房登记的住客不可选
+        $("tbody").on("mousemove",'input:checkbox',function(){
+            if (!$(this).attr("id")) {
+                $(this).attr("disabled","disabled");
+            }
+          
+        })
+
+
+        /*$("#editUser").click(function(){
+            var id = $("input:checkbox:checked").attr("id");
+            $("#cIDCard").text($("input:checkbox:checked").parent().parent().children().eq(3).text())
+            $("#cname").text($("input:checkbox:checked").parent().parent().children().eq(2).text())
+            $("#startNo").text($("input:checkbox:checked").parent().parent().children().eq(10).text())
+            console.log(id)
+            if (id == undefined || id == "") {
+                fail_prompt("请选择要进行退房登记的住户！")
+            }else{
+                //console.log(65656)
+                $('#myModal').modal({
+                    show: true,
+                    backdrop:'static'
+                })
+                $('#roomID').val(id);
+            }
+        })*/
+
+        /*$("input:checkbox .checkbox1").on("click",function(){
+            console.log($(this).attr("id"))
+        })*/
+        var idd = ""
+        $('.content1').on('click',"input[type='checkbox']",function(){
+            // CheckBox点击你的代码
+            if ($(this).prop('checked')) {
+                //console.log("选中了")
+                if (idd == "") {
+                    idd = $(this).attr("id");
+                    $("#cIDCard").text($(this).parent().parent().children().eq(3).text())
+                    $("#cname").text($(this).parent().parent().children().eq(2).text())
+                    $("#startNo").text($(this).parent().parent().children().eq(10).text())
+                }else{
+                    $(this).attr("checked",false)
+                    fail_prompt("每次只能勾选一条数据！")
+                }
+                
+            }else{
+                //console.log("没有选中")
+                idd = ""
+            }
+            //console.log($(this).attr("id"))
+        })
+
+        $("#editUser").on("click",function(){
+            //var id = $("input:checkbox:checked").attr("id");
+            //console.log($("input:checkbox:checked").parent().parent().children().eq(3).text())
+            /*$("#cIDCard").text($("input:checkbox:checked").parent().parent().children().eq(3).text())
+            $("#cname").text($("input:checkbox:checked").parent().parent().children().eq(2).text())
+            $("#startNo").text($("input:checkbox:checked").parent().parent().children().eq(10).text())*/
+            //console.log(idd)
+            if (idd == undefined || idd == "") {
+                fail_prompt("请选择要进行退房登记的住户！")
+            }else{
+                //console.log(65656)
+                $('#myModal').modal({
+                    show: true,
+                    backdrop:'static'
+                })
+                $('#roomID').val(idd);
+            }
+        })
+        
+
+
+     })
+        /*时间格式化*/
+        function a(d){
+            if(parseInt(d) < 10){
+                return  "0"+d
+            }else{
+                return d
+            }
+        }
+        function timestampToTime(timestamp) {
+            var date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+            var Y = date.getFullYear() + '-';
+            var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+            var D = a(date.getDate()) + ' ';
+            var h = a(date.getHours()) + ':';
+            var m = a(date.getMinutes()) + ':';
+            var s = a(date.getSeconds());
+            return Y + M + D + h + m + s;
+        }
+
+    </script>
+</body>
+
+</html>

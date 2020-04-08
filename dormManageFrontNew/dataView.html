@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>H+ 后台主题UI框架 - 百度ECHarts</title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+    <!-- 加载动画 -->
+    <div id="loading" style="margin-top:-20px;width:100%;height: 100%;background: rgba(0,0,0,0.5);position: fixed;z-index: 1000000;display: none;" >
+        <div class="sk-spinner sk-spinner-three-bounce" style="position: relative;top:50%;height:11px; ">
+            <div class="sk-bounce1"></div>
+            <div class="sk-bounce2"></div>
+            <div class="sk-bounce3"></div>
+        </div>
+    </div>
+    <!-- <div class="row  border-bottom white-bg dashboard-header">
+        <div class="col-sm-12">
+            <p>ECharts开源来自百度商业前端数据可视化团队，基于html5 Canvas，是一个纯Javascript图表库，提供直观，生动，可交互，可个性化定制的数据可视化图表。创新的拖拽重计算、数据视图、值域漫游等特性大大增强了用户体验，赋予了用户对数据进行挖掘、整合的能力。 <a href="http://echarts.baidu.com/doc/about.html" target="_blank">了解更多</a>
+            </p>
+            <p>ECharts官网：<a href="http://echarts.baidu.com/" target="_blank">http://echarts.baidu.com/</a>
+            </p>
+    
+        </div>
+    
+    </div> -->
+    <div class="contentbox wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+            <div class="col-sm-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-success pull-right">今天</span>
+                        <h5>总房间数</h5>
+                    </div>
+                    <div class="ibox-content ibox-content1">
+                        <h1 class="no-margins aaa"></h1>
+                        <div class="stat-percent font-bold text-success kkk">20%<i class="fa fa-bolt"></i> 
+                        </div>
+                        <small class="refreshTime1">较前一日</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-info pull-right">今天</span>
+                        <h5>空房数</h5>
+                    </div>
+                    <div class="ibox-content ibox-content2">
+                        <h1 class="no-margins bbb"></h1>
+                        <div class="stat-percent font-bold text-info  kkk1">20% <i class="fa fa-level-down"></i>
+                        </div>
+                        <small class="refreshTime2">较前一日</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-primary pull-right">今天</span>
+                        <h5>床位数</h5>
+                    </div>
+                    <div class="ibox-content ibox-content3">
+                        <h1 class="no-margins ccc">106,120</h1>
+                        <div class="stat-percent font-bold text-navy  kkk2">44% <i class="fa fa-level-up"></i>
+                        </div>
+                        <small class="refreshTime3">较前一日</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-danger pull-right">今天</span>
+                        <h5>在住人数</h5>
+                    </div>
+                    <div class="ibox-content ibox-content4">
+                        <h1 class="no-margins ddd">80,600</h1>
+                        <div class="stat-percent font-bold text-danger  kkk3">38% <i class="fa fa-level-down"></i>
+                        </div>
+                        <small class="refreshTime4">较前一日</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="contentbb">
+            <div class="row">
+            <div class="col-sm-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>折线图</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="graph_flot.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="graph_flot.html#">选项1</a>
+                                </li>
+                                <li><a href="graph_flot.html#">选项2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="echarts" id="echarts-line-chart"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>柱状图</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="graph_flot.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="graph_flot.html#">选项1</a>
+                                </li>
+                                <li><a href="graph_flot.html#">选项2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+
+                        <div class="echarts" id="echarts-bar-chart"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>折线图</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="graph_flot.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="graph_flot.html#">选项1</a>
+                                </li>
+                                <li><a href="graph_flot.html#">选项2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="echarts" id="echarts-line-chart1"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>折线图</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="graph_flot.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="graph_flot.html#">选项1</a>
+                                </li>
+                                <li><a href="graph_flot.html#">选项2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="echarts" id="echarts-line-chart2"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- <div class="col-sm-6">
+                 <div class="ibox float-e-margins">
+                     <div class="ibox-title">
+                         <h5>饼状图</h5>
+                         <div class="ibox-tools">
+                             <a class="collapse-link">
+                                 <i class="fa fa-chevron-up"></i>
+                             </a>
+                             <a class="dropdown-toggle" data-toggle="dropdown" href="graph_flot.html#">
+                                 <i class="fa fa-wrench"></i>
+                             </a>
+                             <ul class="dropdown-menu dropdown-user">
+                                 <li><a href="graph_flot.html#">选项1</a>
+                                 </li>
+                                 <li><a href="graph_flot.html#">选项2</a>
+                                 </li>
+                             </ul>
+                             <a class="close-link">
+                                 <i class="fa fa-times"></i>
+                             </a>
+                         </div>
+                     </div>
+                     <div class="ibox-content">
+                         <div class="echarts" id="echarts-pie-chart"></div>
+                     </div>
+                 </div>
+             </div> --> 
+        </div>
+        
+            
+            
+            
+            
+           
+        </div>
+
+        
+    </div>
+    <!-- 全局js -->
+    <script src="js/jquery.min.js?v=2.1.4"></script>
+    <script src="js/bootstrap.min.js?v=3.3.6"></script>
+
+
+
+    <!-- ECharts -->
+    <script src="js/plugins/echarts/echarts-all.js"></script>
+
+    <!-- 自定义js -->
+    <script src="js/content.js?v=1.0.0"></script>
+    <script src="js/comm.js"></script>
+
+
+    <!-- ECharts demo data -->
+    <script src="js/demo/echarts-demo.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $.ajax({
+                    url:"http://10.11.18.222:5002/getdatas",
+                    method:"post",
+                    beforeSend:function(){
+                    $("#loading").fadeIn(200);
+                    },
+                    success:function(result){
+                        $("#loading").fadeOut(200);
+                        if (result.errorCode == "405") {
+                            $('.contentbox').html('')
+                            fail_prompt(result.errorMessage)
+                        }else if (result.errorCode != "200") {
+                            //$('.contentbox').html('')
+                            fail_prompt(result.errorMessage)
+                        }else{
+                            $(".aaa").text(result.errorMessage.roomNum)
+                            $(".bbb").text(result.errorMessage.vacantRoomNum)
+                            $(".ccc").text(result.errorMessage.bedNum)
+                            $(".ddd").text(result.errorMessage.usersNum)
+                            if (result.errorMessage.roomNumRate == "null") {
+                                $(".kkk").html('---<i class="fa fa-bolt"></i>')
+                            }else if (result.errorMessage.roomNumRate > 0) {
+                                 $(".kkk").html((result.errorMessage.roomNumRate*100).toFixed(2)+'%<i class="fa fa-level-up"></i>')
+                            }else{
+                                $(".kkk").html((result.errorMessage.roomNumRate*100).toFixed(2)+'%<i class="fa fa-level-down"></i>')
+                            }
+
+                            if (result.errorMessage.vacantRoomNumRate == "null") {
+                                $(".kkk1").html('---<i class="fa fa-bolt"></i>')
+                            }else if (result.errorMessage.vacantRoomNumRate > 0) {
+                                 $(".kkk1").html((result.errorMessage.vacantRoomNumRate*100).toFixed(2)+'%<i class="fa fa-level-up"></i>')
+                            }else{
+                                $(".kkk1").html((result.errorMessage.vacantRoomNumRate*100).toFixed(2)+'%<i class="fa fa-level-down"></i>')
+                            }
+
+                            if (result.errorMessage.bedNumRate == "null") {
+                                $(".kkk2").html('---<i class="fa fa-bolt"></i>')
+                            }else if (result.errorMessage.bedNumRate > 0) {
+                                 $(".kkk2").html((result.errorMessage.bedNumRate*100).toFixed(2)+'%<i class="fa fa-level-up"></i>')
+                            }else{
+                                $(".kkk2").html((result.errorMessage.bedNumRate*100).toFixed(2)+'%<i class="fa fa-level-down"></i>')
+                            }
+
+                            if (result.errorMessage.usersNumRate == "null") {
+                                $(".kkk3").html('---<i class="fa fa-bolt"></i>')
+                            }else if (result.errorMessage.usersNumRate > 0) {
+                                 $(".kkk3").html((result.errorMessage.usersNumRate*100).toFixed(2)+'%<i class="fa fa-level-up"></i>')
+                            }else{
+                                $(".kkk3").html((result.errorMessage.usersNumRate*100).toFixed(2)+'%<i class="fa fa-level-down"></i>')
+                            }
+                            $(".refreshTime1").text("上次更新："+result.errorMessage.refleshTimeroomNum)
+                            $(".refreshTime2").text("上次更新："+result.errorMessage.refleshTimebedNum)
+                            $(".refreshTime3").text("上次更新："+result.errorMessage.refleshTimeusersNum)
+                            $(".refreshTime4").text("上次更新："+result.errorMessage.refleshTimevacantRoomNum)
+                        }
+
+                    }
+                })
+        })
+    </script>
+
+    
+
+</body>
+
+</html>

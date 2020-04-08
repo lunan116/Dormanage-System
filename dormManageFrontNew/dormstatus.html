@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--360浏览器优先以webkit内核解析-->
+
+
+    <title>H+ 后台主题UI框架 - 主页示例</title>
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/plugins/bootstrap-table/bootstrap-table.min.css">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/mystyle.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-select.min.css">
+</head>
+
+<body class="gray-bg">
+    <!-- 加载动画 -->
+    <div id="loading" style="margin-top:-20px;width:100%;height: 100%;background: rgba(0,0,0,0.5);position: fixed;z-index: 1000000;display: none;" >
+        <div class="sk-spinner sk-spinner-three-bounce" style="position: relative;top:50%;height:11px; ">
+            <div class="sk-bounce1"></div>
+            <div class="sk-bounce2"></div>
+            <div class="sk-bounce3"></div>
+        </div>
+    </div>
+    <div class=" animated fadeInRight">
+        <div id="header">
+        <h1>房间状态</h1>
+        <div class="showBoxGroup">
+            <div class="showbox showbox1"></div><p>空</p>
+            <div class="showbox showbox2"></div><p>半空</p>
+            <div class="showbox showbox3"></div><p>满员</p>
+            <div class="input-group input-group1 input-group2">
+                    <input id="keyword" type="text" placeholder="请输入关键词" class="input-sm form-control"> <span class="input-group-btn">
+                    <button type="button" class="btn btn-sm btn-primary"> 搜索</button> </span>
+                </div>
+        </div>
+    </div>
+    <div class="col-sm-12  content">
+    </div>
+    
+    <div class="fenye">
+        <ul class="pagination pagination-sm fenye1">
+        <li id="pre"><a href="#">&laquo;</a></li>
+        <li id="pageNo"><a href="#">1</a></li>
+        <li id="next"><a href="#">&raquo;</a></li>
+    </ul>
+    </div>
+    </div>
+    <!-- 模态框 -->
+    <div class="modal inmodal fade" id="myModal" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">入住登记</h4>
+                    <small class="font-bold">记录住客信息
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal m-t" id="commentForm">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">姓名：</label>
+                            <div class="col-sm-8">
+                                <input id="cname" name="name" minlength="2" type="text" class="form-control" required="" aria-required="true" placeholder="请输入住客姓名">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">身份证号：</label>
+                            <div class="col-sm-8">
+                                <input id="cIDCard" type="text" minlength="18" maxlength="18" class="form-control" name="IDCard" required="" aria-required="true" placeholder="请输入住客身份证号">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">电表起始数：</label>
+                            <div class="col-sm-8">
+                                <input id="startNo" type="text" class="form-control" name="startNo" required="" aria-required="true" placeholder="请输入电表起始数">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">所属公司：</label>
+                            <div class="col-sm-8">
+                                <input id="belongToCompany" type="text" class="form-control" name="belongToCompany" required="" aria-required="true" placeholder="请输入所属公司">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">联系方式：</label>
+                            <div class="col-sm-8">
+                                <input id="phoneNo" type="text" class="form-control" name="phoneNo" required="" aria-required="true" placeholder="请输入联系方式">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">性别：</label>
+                            <div class="col-sm-8 col-sm-8-new">
+                                <!-- <input id="gender" type="text" class="form-control" name="gender" required="" aria-required="true" placeholder="请输入性别"> -->
+                                <div class="radio radio1">
+                                    <label>
+                                        <input type="radio" checked="" value="男" id="optionsRadios1" name="optionsRadios">男</label>
+                                </div>
+                                <div class="radio radio1">
+                                    <label>
+                                        <input type="radio" checked="" value="女" id="optionsRadios2" name="optionsRadios">女</label>
+                                </div>
+                                </div>
+                            
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" data-style="btn-info">职等：</label>
+                            <div class="col-sm-8">
+                                <select class="selectpicker" id="rank">
+                                  <option>一职等</option>
+                                  <option>二职等</option>
+                                  <option>三职等</option>
+                                  <option>四职等</option>
+                                  <option>五职等</option>
+                                  <option>六职等</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <input id="roomID" type="hidden">
+                                                <!-- <div class="form-group">
+                                                    <div class="col-sm-4 col-sm-offset-3">
+                                                        <button class="btn btn-primary" type="submit">提交</button>
+                                                    </div>
+                                                </div> -->
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="saveInfo"  data-dismiss="modal">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- 全局js -->
+    <script src="js/jquery.min.js?v=2.1.4"></script>
+    <script src="js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="js/plugins/layer/layer.min.js"></script>
+
+    <!-- Bootstrap table -->
+    <script src="js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <!-- <script src="js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script> -->
+    <script src="js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script type="text/javascript" src="./js/jquery-vilidate.js"></script>
+
+    <!-- bootstrap-select.min.js  -->
+    <script src="js/bootstrap-select.min.js"></script>
+
+    <!-- layerDate plugin javascript -->
+    <script src="js/plugins/layer/laydate/laydate.js"></script>
+    <script type="text/javascript" src="js/jquery.table2excel.js"></script>
+
+    <!-- Peity -->
+    <!-- <script src="js/demo/bootstrap-table-demo.js"></script> -->
+    <!-- 自定义js -->
+    <script src="js/content.js"></script>
+    <script src="js/comm.js"></script>
+    <!-- 欢迎信息 -->
+    <script src="js/welcome.js"></script>
+    <script type="text/javascript">
+    $().ready(function() {
+        var pageNo = 1;
+        var leftMsg = false;
+        var rightMsg = false;
+        var roomStatus = -1;//-1表示全部，0表示空，1表示半空，2表示满员
+        var keyword = "";
+        refleshtable(pageNo,callbacks,roomStatus,0,keyword)
+        $("#pre").click(function(){
+            $('#next > a').css("background-color","#fff")
+            pageNo -= 1
+            if (pageNo <= 0) {
+                pageNo = 1;
+                leftMsg = true;
+                $('#pre > a').css("background-color","#ddd")
+                $('#pre > a').attr('disabled',"true");
+            }else{
+                refleshtable(pageNo,callbacks,roomStatus,0,keyword)
+                $('#pre > a').css("background-color","#fff")
+                $('#pre > a').attr('disabled',"false");
+                
+            }
+        })
+
+        /*输入框内容改变触发事件*/
+        $("#keyword").bind('input propertychange', function(){
+            //console.log(pageNo)
+            keyword = $(this).val();
+            if (keyword) {
+                pageNo=1
+                refleshtable(pageNo,callbacks,roomStatus,0,keyword)
+            }else{
+                pageNo=1
+                $('#next > a').css("background-color","#fff")
+                        $('#next > a').attr('disabled',"false");
+                refleshtable(pageNo,callbacks,roomStatus,0,keyword)
+            }
+        })
+
+        $(".showbox1").click(function(){
+            roomStatus = 0;
+            pageNo = 1
+            refleshtable(1,callbacks,roomStatus,1,keyword)
+            $("#pageNo > a").text(1)
+            $(this).unbind("mouseenter").unbind("mouseleave");
+            $(this).css({
+                "background-color": "rgb(107,194,5)",
+                "box-shadow": "1px 1px 3px  rgba(0,0,0,0.5)"
+            })
+            $(".showbox2").css({
+                "background-color": "rgb(227,160,93)",
+                "box-shadow": "0px 0px 0px  rgba(0,0,0,0.5)"
+            })
+            $(".showbox2").hover(function(){
+                $(this).css({
+                "background-color": "rgb(227,160,50)",
+                "box-shadow": "1px 1px 3px rgba(0,0,0,0.5)"
+            })
+            },function(){
+                $(this).css({
+                "background-color": "rgb(227,160,93)",
+                "box-shadow": "0px 0px 0px  rgba(0,0,0,0.5)"
+            })
+            })
+            $(".showbox3").css({
+                "background-color": "rgb(213,26,33)",
+                "box-shadow": "0px 0px 0px  rgba(0,0,0,0.5)"
+            })
+            $(".showbox3").hover(function(){
+                $(this).css({
+                "background-color": "rgb(213,26,5)",
+                "box-shadow": "1px 1px 3px rgba(0,0,0,0.5)"
+            })
+            },function(){
+                $(this).css({
+                "background-color": "rgb(213,26,33)",
+                "box-shadow": "0px 0px 0px  rgba(0,0,0,0.5)"
+            })
+            })
+
+
+        })
+
+        $(".showbox2").click(function(){
+            roomStatus = 1;
+            pageNo = 1
+            refleshtable(1,callbacks,roomStatus,1,keyword)
+            $("#pageNo > a").text(1)
+            $(this).unbind("mouseenter").unbind("mouseleave");
+            $(this).css({
+                "background-color": "rgb(227,160,50)",
+                "box-shadow": "1px 1px 3px rgba(0,0,0,0.5)"
+            })
+            $(".showbox1").hover(function(){
+                $(this).css({
+                "background-color": "rgb(107,194,5)",
+                "box-shadow": "1px 1px 3px  rgba(0,0,0,0.5)"
+            })
+            },function(){
+                $(this).css({
+                "background-color": "rgb(107,194,53)",
+                "box-shadow": "0px 0px 0px  rgba(0,0,0,0.5)"
+            })
+            })
+            $(".showbox1").css({
+                "background-color": "rgb(107,194,53)",
+                "box-shadow": "0px 0px 0px  rgba(0,0,0,0.5)"
+            })
+            $(".showbox3").css({
+                "background-color": "rgb(213,26,33)",
+                "box-shadow": "0px 0px 0px  rgba(0,0,0,0.5)"
+            })
+            $(".showbox3").hover(function(){
+                $(this).css({
+                "background-color": "rgb(213,26,5)",
+                "box-shadow": "1px 1px 3px rgba(0,0,0,0.5)"
+            })
+            },function(){
+                $(this).css({
+                "background-color": "rgb(213,26,33)",
+                "box-shadow": "0px 0px 0px  rgba(0,0,0,0.5)"
+            })
+            })
+
+        })
+
+        $(".showbox3").click(function(){
+            roomStatus = 2;
+            $("#pageNo > a").text(1)
+            pageNo = 1
+            refleshtable(1,callbacks,roomStatus,1,keyword)
+            $(this).unbind("mouseenter").unbind("mouseleave");
+            $(this).css({
+                "background-color": "rgb(213,26,5)",
+                "box-shadow": "1px 1px 3px rgba(0,0,0,0.5)"
+            })
+            $(".showbox2").css({
+                "background-color": "rgb(227,160,93)",
+                "box-shadow": "0px 0px 0px  rgba(0,0,0,0.5)"
+            })
+            $(".showbox2").hover(function(){
+                $(this).css({
+                "background-color": "rgb(227,160,50)",
+                "box-shadow": "1px 1px 3px rgba(0,0,0,0.5)"
+            })
+            },function(){
+                $(this).css({
+                "background-color": "rgb(227,160,93)",
+                "box-shadow": "0px 0px 0px  rgba(0,0,0,0.5)"
+            })
+            })
+            $(".showbox1").css({
+                "background-color": "rgb(107,194,53)",
+                "box-shadow": "0px 0px 0px  rgba(0,0,0,0.5)"
+            })
+            $(".showbox1").hover(function(){
+                $(this).css({
+                "background-color": "rgb(107,194,5)",
+                "box-shadow": "1px 1px 3px  rgba(0,0,0,0.5)"
+            })
+            },function(){
+                $(this).css({
+                "background-color": "rgb(107,194,53)",
+                "box-shadow": "0px 0px 0px  rgba(0,0,0,0.5)"
+            })
+            })
+
+        })
+
+        $("#next").click(function(){
+            pageNo += 1;
+            $('#pre > a').css("background-color","#fff")
+            refleshtable(pageNo,callbacks,roomStatus,0,keyword)
+        })
+
+        $(".content").on("click",".roombox",function(){
+            //console.log($(this).attr("id"));
+            var id = $(this).attr("id");
+            if (id == undefined || id == "") {
+                fail_prompt("该房间床位已满！")
+            }else{
+                $('#myModal').modal({
+                    show: true,
+                    backdrop:'static'
+                })
+                $('#roomID').val(id);
+            }
+
+        })
+
+        $("#saveInfo").click(function(){
+            var name = $("#cname").val();
+            var IDCard = $("#cIDCard").val();
+            var startNo = $("#startNo").val();
+            var roomID = $("#roomID").val();
+            var rank = $("#rank option:selected").val();
+            var phoneNo = $("#phoneNo").val();
+            var gender = $('input:radio:checked').val();
+            var belongToCompany = $("#belongToCompany").val();
+            if (IDCard.length != 18) {
+                fail_prompt("身份证号必须为18位！")
+            }else{
+                var data = {
+                name,IDCard,startNo,roomID,rank,phoneNo,gender,belongToCompany
+                }
+                console.log(data);
+                $.ajax({
+                    url:"http://10.11.18.222:5002/createUserInfo",
+                    method:"post",
+                    data:data,
+                    beforeSend:function(){
+                    $("#loading").fadeIn(200);
+                    },
+                    success:function(result){
+                    $("#loading").fadeOut(200);
+                    //console.log(result);
+                    if (result.errorCode == "200") {
+                        success_prompt("登记成功！")
+                        pageNo = 1
+                        refleshtable(pageNo,callbacks,roomStatus,1,keyword)
+                    }else if (result.errorCode == "404" || result.errorCode == "407") {
+                        fail_prompt("登记失败，请稍后重试！")
+                    }else if(result.errorCode == "405"){
+                        fail_prompt("登记失败，该住客已经登记，现住在"+result.roomNo+"室！")
+                    }else if(result.errorCode == "402"){
+                        fail_prompt("登记失败，电表起始数不能小于原房间电表数！")
+                    }
+                }
+                });
+            }
+            
+        })
+
+        function callbacks(s){
+            if ( s==-1 ) {
+                pageNo -= 1;
+                $("#pageNo > a").text(pageNo)
+                $('#next > a').css("background-color","#ddd")
+                $('#next > a').attr('disabled',"true");
+            }else{
+                $("#pageNo > a").text(pageNo)
+            }
+            
+        }
+
+        /*function ccb(a){
+            if (a == 0) {
+                $("#pageNo > a").text(1)
+            }
+        }*/
+
+        function refleshtable(pageNo,cb,roomStatus,ccb,keyword){
+            var data = {pageNo:pageNo,roomStatus,keyword}
+                $.ajax({
+                    url:"http://10.11.18.222:5002/getDormStatus",
+                    method:"post",
+                    data:data,
+                    beforeSend:function(){
+                    $("#loading").fadeIn(200);
+                    },
+                    success:function(result){
+                    $("#loading").fadeOut(200);
+                    //console.log(result);
+                    if (result.errorCode == "200") {
+                        var html = "";
+                        for(var i = 0;i<result.errMessage.length;i++){
+                            if (result.errMessage[i].peopleNo == 0) {
+                                html += `<div id="`+result.errMessage[i]._id+`" class="roombox" style="background-color:rgb(107,194,53);">
+                                    <p class="roomNo">房间号：<span>`+result.errMessage[i].roomNo+`</span></p>
+                                    <p>床位数量：<span>`+result.errMessage[i].maxNo+`</span></p>
+                                    <p>入住人数：<span>`+result.errMessage[i].peopleNo+`</span></p>
+                                </div>`
+                            }else if (result.errMessage[i].peopleNo > 0 & result.errMessage[i].peopleNo == result.errMessage[i].maxNo) {
+                                html += `<div class="roombox" style="background-color: rgb(213,26,33);">
+                                    <p class="roomNo">房间号：<span>`+result.errMessage[i].roomNo+`</span></p>
+                                    <p>床位数量：<span>`+result.errMessage[i].maxNo+`</span></p>
+                                    <p>入住人数：<span>`+result.errMessage[i].peopleNo+`</span></p>
+                                </div>`
+                            }else{
+                                html += `<div class="roombox"  id="`+result.errMessage[i]._id+`" style="background-color: rgb(227,160,93);">
+                                    <p class="roomNo">房间号：<span>`+result.errMessage[i].roomNo+`</span></p>
+                                    <p>床位数量：<span>`+result.errMessage[i].maxNo+`</span></p>
+                                    <p>入住人数：<span>`+result.errMessage[i].peopleNo+`</span></p>
+                                </div>`
+                            }
+                        }
+                        $(".content").html(html)
+                        cb(0)
+                    }else if (result.errorCode == "401" || result.errorCode == "406") {
+                        fail_prompt("页面数据加载失败，请稍后重试！")
+                    }else if(result.errorCode == "302"){
+                        fail_prompt("已经是最后一页了！")
+                        cb(-1)
+                    }else{
+                        fail_prompt("暂无数据！")
+                        $(".content").html("")
+                        cb(-1)
+                    }
+                    if (ccb == 1) {
+                        $("#pageNo > a").text(1)
+                    }
+                }
+                });
+
+        }
+        
+        
+        
+
+        
+
+
+     })
+
+    </script>
+</body>
+
+</html>
